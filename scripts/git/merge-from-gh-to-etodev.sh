@@ -7,15 +7,15 @@ cd $PROJECT_BASE_FOLDER
 GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_gh-spd-tpselvan-gmail-com-np"
 for dir in */; do
     if [ -d "$dir" ]; then
-        GITREPO="$dir"
+        GIT_REPO="$dir"
         EB1="- --"
         EB2="- ----"
         EB3="- ------"
-        cd $PROJECT_BASE_FOLDER/$GITREPO
-        if [[ $GITREPO == *-lib* ]]; then
-            GITBRANCH=main
+        cd $PROJECT_BASE_FOLDER/$GIT_REPO
+        if [[ $GIT_REPO == *-lib* ]]; then
+            GIT_BRANCH=main
         else
-            GITBRANCH=develop
+            GIT_BRANCH=develop
         fi
         UPSTREAM=${1:-'@{u}'}
 
@@ -35,7 +35,7 @@ for dir in */; do
             git -c core.quotepath=false -c log.showSignature=false merge develop
             echo $EB3"Merged develop into eto-develop"
 
-        echo $EB2$GITREPO"("$GITBRANCH")"
+        echo $EB2$GIT_REPO"("$GIT_BRANCH")"
         if [ $LOCAL = $BBREMOTE ]; then
             echo $EB3" - Local already has the latest"
         elif [ $LOCAL = $BASE ]; then
