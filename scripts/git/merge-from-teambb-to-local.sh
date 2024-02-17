@@ -5,7 +5,7 @@ HOME_FOLDER=/c/Users/selva
 PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/sync-bb-sp2-to-gh-spd
 # shellcheck disable=SC2164
 cd $PROJECT_BASE_FOLDER
-GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_bb-bqin-sp-beamteq-com-np"
+
 for dir in */; do
     if [ -d "$dir" ]; then
         GIT_REPO="$dir"
@@ -27,7 +27,11 @@ for dir in */; do
         #echo $EB3$LOCAL
         #echo $EB3$BBREMOTE
         #echo $EB3$BASE
+        # eval "$(ssh-agent -s)"
+        # ssh-add /c/Users/selva/.ssh/id_ed25519_bb-bqin-sp-beamteq-com-np
 
+        git fetch
+        git pull
 
         echo $EB2$GIT_REPO"("$GIT_BRANCH")"
         if [ $LOCAL = $BBREMOTE ]; then

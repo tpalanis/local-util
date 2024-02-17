@@ -4,10 +4,11 @@ echo "-- push started"
 HOME_FOLDER=/c/Users/selva
 PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/sync-bb-sp2-to-gh-spd
 cd $PROJECT_BASE_FOLDER
-GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_gh-spd-tpselvan-gmail-com-np"
+# GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_gh-spd-tpselvan-gmail-com-np"
 for dir in */; do
-    if [ -d "$dir" ]; then
+    if ([ -d "$dir" ] && [[ "$dir" != *-lib* ]]); then
         GIT_REPO="$dir"
+        echo $EB2$GIT_REPO
         EB1="- --"
         EB2="- ----"
         EB3="- ------"
@@ -26,12 +27,12 @@ for dir in */; do
         #echo $EB3$LOCAL
         #echo $EB3$BASE
 
-        GHREMOTE=$(git rev-parse github-spd/$GIT_BRANCH)
+        GHREMOTE=$(git rev-parse github-spd/$GIT_BRANCH) || true
         #echo $EB3$GHREMOTE
         echo $EB2$GIT_REPO"("$GIT_BRANCH")"
         if [ $GHREMOTE != $BASE ]; then
             echo $EB3"Need to push"
-            if [ $GIT_REPO == "survey-be-lib" ]; then
+            if [ $GIT_REPO == "survey-be-libnone/" ]; then
                 #git lfs push --all github-spd $GIT_BRANCH
                 echo $EB3"Ignored"
             else
