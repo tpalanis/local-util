@@ -3,9 +3,9 @@
 echo "-- merge develop to seldev started"
 HOME_FOLDER=/c/Users/selva
 PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/bqincustom
-cd $PROJECT_BASE_FOLDER || exit
 SOURCE_BRANCH_NAME=develop
 TARGET_BRANCH_NAME=seldev-develop
+cd $PROJECT_BASE_FOLDER || exit
 
 for dir in */; do
     if [ -d "$dir" ] && [ "$dir" != "*-lib*" ]; then
@@ -15,13 +15,17 @@ for dir in */; do
         EB3="- ------"
         cd $PROJECT_BASE_FOLDER/"$GIT_REPO" || exit
 
-        git branch "${TARGET_BRANCH_NAME}"
+        git -c core.quotepath=false -c log.showSignature=false fetch origin --recurse-submodules=no --progress --prune
+        CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+        if [ "$CURRENT_BRANCH" != "$TARGET_BRANCH_NAME" ]; then
+          git checkout "${TARGET_BRANCH_NAME}"
+        fi
+
         UPSTREAM=${1:-'@{u}'}
         LOCAL=$(git rev-parse @)
         #BBREMOTE=$(git rev-parse "$UPSTREAM")
         BASE=$(git merge-base @ "$UPSTREAM")
 
-        git -c core.quotepath=false -c log.showSignature=false fetch origin --recurse-submodules=no --progress --prune
         git -c core.quotepath=false -c log.showSignature=false fetch origin "${SOURCE_BRANCH_NAME}":"${SOURCE_BRANCH_NAME}" --recurse-submodules=no --progress --prune
         git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit
 
