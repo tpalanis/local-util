@@ -1,11 +1,11 @@
 #!/bin/sh
 
-echo "-- merge develop to eto-develop started"
+echo "-- merge develop to seldev started"
 HOME_FOLDER=/c/Users/selva
-PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/etogrow
+PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/bqincustom
 cd $PROJECT_BASE_FOLDER || exit
 SOURCE_BRANCH_NAME=develop
-TARGET_BRANCH_NAME=eto-develop
+TARGET_BRANCH_NAME=seldev-develop
 
 for dir in */; do
     if [ -d "$dir" ] && [ "$dir" != "*-lib*" ]; then
