@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "-- THIS IS OBSOLETE --"
+exit 1
+
 echo "-- merge to local started"
 HOME_FOLDER=/c/Users/selva
 PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/etogrow
@@ -28,7 +31,7 @@ for dir in */; do
         #echo $EB3$BASE
 
 
-        echo $EB2$GIT_REPO"("$GIT_BRANCH")"
+        echo $EB2"$GIT_REPO""$GIT_BRANCH"
         if [ $LOCAL = $BBREMOTE ]; then
             echo $EB3" - Local already has the latest"
         elif [ $LOCAL = $BASE ]; then
