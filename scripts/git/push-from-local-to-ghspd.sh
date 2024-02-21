@@ -53,15 +53,15 @@ for dir in */; do
         BASE=$(git merge-base @ "$UPSTREAM")
 
         GHREMOTE=$(git rev-parse github-spd/$GIT_BRANCH) || true
-        LOCAL_CHANGE_COUNT=$(git rev-list --count $GIT_BRANCH..github-spd/$GIT_BRANCH)
-        if [ "${LOCAL_CHANGE_COUNT}" -eq "0" ]; then
+
+        #LOCAL_CHANGE_COUNT=$(git rev-list --count $GIT_BRANCH..github-spd/$GIT_BRANCH)
+        if [ "${GHREMOTE}" == "${BBREMOTE}" ]; then
             echo $EB3"GH Remote already has the latest" > /dev/null 2>&1
         else
-            echo $EB3"Need to push"
-            git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain github-spd refs/heads/$GIT_BRANCH:$GIT_BRANCH
+            git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain github-spd refs/heads/$GIT_BRANCH:$GIT_BRANCH > /dev/null 2>&1
             echo $EB3"Pushed"
         fi
-      echo $EB3"GH Remote already has the latest - ""$GIT_REPO""${GIT_BRANCH}"
+      echo $EB3"GH Remote has the latest - ""$GIT_REPO""${GIT_BRANCH}"
     fi
     cd $PROJECT_BASE_FOLDER
 done

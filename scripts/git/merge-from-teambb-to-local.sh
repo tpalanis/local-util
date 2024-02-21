@@ -59,10 +59,10 @@ for dir in */; do
         # ssh-add /c/Users/selva/.ssh/id_ed25519_bb-bqin-sp-beamteq-com-np
 
         git checkout "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
-        git fetch
+        git fetch > /dev/null 2>&1
         git pull  > /dev/null 2>&1
     fi
-    echo "$EB3"" - Local already has the latest - ""$GIT_REPO""$GIT_BRANCH"
+    echo "$EB3"" - Local has the latest - ""$GIT_REPO""$GIT_BRANCH"
     cd $PROJECT_BASE_FOLDER
 done
 echo "-- merge to local ended"
