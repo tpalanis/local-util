@@ -47,6 +47,7 @@ for dir in */; do
         # end of script - - check if there are any uncommitted changes
 
         git checkout "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
+        git fetch > /dev/null 2>&1
 
         UPSTREAM=${1:-'@{u}'}
         LOCAL=$(git rev-parse @)
@@ -60,10 +61,14 @@ for dir in */; do
         # eval "$(ssh-agent -s)"
         # ssh-add /c/Users/selva/.ssh/id_ed25519_bb-bqin-sp-beamteq-com-np
 
-        git fetch > /dev/null 2>&1
-        git pull  > /dev/null 2>&1
+        if [ "${LOCAL}" == "${BBREMOTE}" ]; then
+            echo $EB3"GH Remote already has the latest" > /dev/null 2>&1
+        else
+          git pull  > /dev/null 2>&1
+          echo $EB3"Pulled"
+        fi
     fi
-    echo "$EB3"" - Local has the latest - ""$GIT_REPO""$GIT_BRANCH"
+    echo "$EB3"" - Local has the latest from BB - ""$GIT_REPO""$GIT_BRANCH"
     cd $PROJECT_BASE_FOLDER
 done
 echo "-- merge to local ended"

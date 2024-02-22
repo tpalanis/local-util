@@ -61,7 +61,7 @@ for dir in */; do
             git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain github-spd refs/heads/$GIT_BRANCH:$GIT_BRANCH > /dev/null 2>&1
             echo $EB3"Pushed"
         fi
-      echo $EB3"GH Remote has the latest - ""$GIT_REPO""${GIT_BRANCH}"
+      echo $EB3"Remote has the latest in GH - ""$GIT_REPO""${GIT_BRANCH}"
     fi
     cd $PROJECT_BASE_FOLDER
 done
