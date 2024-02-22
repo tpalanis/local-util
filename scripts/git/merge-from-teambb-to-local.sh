@@ -62,13 +62,12 @@ for dir in */; do
         # ssh-add /c/Users/selva/.ssh/id_ed25519_bb-bqin-sp-beamteq-com-np
 
         if [ "${LOCAL}" == "${BBREMOTE}" ]; then
-            echo $EB3"GH Remote already has the latest" > /dev/null 2>&1
+          echo "$EB3"" - Local has the latest from BB - NOPULL - ""$GIT_REPO""$GIT_BRANCH" > /dev/null 2>&1
         else
           git pull  > /dev/null 2>&1
-          echo $EB3"Pulled"
+          echo "$EB3"" - Local has the latest from BB - PULLED - ""$GIT_REPO""$GIT_BRANCH"
         fi
     fi
-    echo "$EB3"" - Local has the latest from BB - ""$GIT_REPO""$GIT_BRANCH"
     cd $PROJECT_BASE_FOLDER
 done
 echo "-- merge to local ended"

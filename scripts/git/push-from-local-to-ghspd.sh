@@ -56,12 +56,11 @@ for dir in */; do
 
         #LOCAL_CHANGE_COUNT=$(git rev-list --count $GIT_BRANCH..github-spd/$GIT_BRANCH)
         if [ "${GHREMOTE}" == "${BBREMOTE}" ]; then
-            echo $EB3"GH Remote already has the latest" > /dev/null 2>&1
+            echo $EB3"Remote has the latest in GH - NOPUSH - ""$GIT_REPO""${GIT_BRANCH}" > /dev/null 2>&1
         else
             git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain github-spd refs/heads/$GIT_BRANCH:$GIT_BRANCH > /dev/null 2>&1
-            echo $EB3"Pushed"
+            echo $EB3"Remote has the latest in GH - PUSHED - ""$GIT_REPO""${GIT_BRANCH}"
         fi
-      echo $EB3"Remote has the latest in GH - ""$GIT_REPO""${GIT_BRANCH}"
     fi
     cd $PROJECT_BASE_FOLDER
 done
