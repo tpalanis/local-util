@@ -1,6 +1,10 @@
 #!/bin/sh
 
 echo "-- merge develop to eto-develop started"
+
+EB1="- --"
+EB2="- ----"
+EB3="- ------"
 HOME_FOLDER=/c/Users/selva
 PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/etogrow
 SOURCE_BRANCH_NAME=develop
@@ -11,8 +15,6 @@ for dir in */; do
     if [ -d "$dir" ] && [ "$dir" != "*-lib*" ]; then
         GIT_REPO="$dir"
         echo "$GIT_REPO"
-        EB2="- ----"
-        EB3="- ------"
         cd $PROJECT_BASE_FOLDER/"$GIT_REPO" || exit
 
         # start of script - check if there are any uncommitted changes

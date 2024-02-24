@@ -1,13 +1,14 @@
 #!/bin/sh
 
 echo "-- merge team to local started"
+
 EB1="- --"
 EB2="- ----"
 EB3="- ------"
 HOME_FOLDER=/c/Users/selva
 PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/sync-bb-sp2-to-gh-spd
 SOURCE_BRANCH_NAME=develop
-cd $PROJECT_BASE_FOLDER
+cd $PROJECT_BASE_FOLDER || exit
 
 for dir in */; do
     if [ -d "$dir" ]; then
