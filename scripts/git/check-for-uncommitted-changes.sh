@@ -5,6 +5,7 @@ echo "-- check for uncommitted changes started"
 EB1="- --"
 EB2="- ----"
 EB3="- ------"
+err=0
 
 # List of folders to iterate over
 folders=(
@@ -74,5 +75,10 @@ for folder in "${folders[@]}"; do
         cd $PROJECT_BASE_FOLDER
     done
 done
+
+if [ $err = 1 ]
+then
+    exit 1
+fi
 
 echo "-- check for uncommitted changes completed"
