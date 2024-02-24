@@ -46,10 +46,12 @@ for dir in */; do
         git checkout "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
         git fetch > /dev/null 2>&1
         git pull > /dev/null 2>&1
+        SOURCE_VERSION=$(git rev-parse @)
 
         git checkout "${TARGET_BRANCH_NAME}" > /dev/null 2>&1
         git fetch > /dev/null 2>&1
         git pull > /dev/null 2>&1
+        TARGET_VERSION=$(git rev-parse @)
 
         UPSTREAM=${1:-'@{u}'}
         LOCAL=$(git rev-parse @)
@@ -58,12 +60,15 @@ for dir in */; do
 
         echo "$EB2""$GIT_REPO""$TARGET_BRANCH_NAME"
 
-        git branch --merged | grep "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
-        if git branch --merged | grep -q "\b$SOURCE_BRANCH_NAME\b"; then
-            echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}"  > /dev/null 2>&1
+        if [[ "$SOURCE_VERSION" == "$TARGET_VERSION" ]]; then
+            echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}" > /dev/null 2>&1
         else
-            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit > /dev/null 2>&1
-            echo "$EB3""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"" - MERGED "
+            if git branch --merged | grep -q "\b$SOURCE_BRANCH_NAME\b"; then
+              echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}" > /dev/null 2>&1
+            else
+              git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit > /dev/null 2>&1
+              echo "$EB3""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"" - MERGED "
+            fi
         fi
 
         LOCAL=$(git rev-parse @)
