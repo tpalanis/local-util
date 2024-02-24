@@ -56,13 +56,13 @@ for dir in */; do
         GHREMOTE=$(git rev-parse "$UPSTREAM")
         BASE=$(git merge-base @ "$UPSTREAM")
 
-        echo "$EB2""$GIT_REPO""$GIT_BRANCH"
+        echo "$EB2""$GIT_REPO""$TARGET_BRANCH_NAME"
 
         git branch --merged | grep "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
         if git branch --merged | grep -q "\b$SOURCE_BRANCH_NAME\b"; then
-            echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}"
+            echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}" > /dev/null 2>&1
         else
-            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit  > /dev/null 2>&1
+            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit > /dev/null 2>&1
             echo "$EB3""Merged ""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"
         fi
 
@@ -74,7 +74,7 @@ for dir in */; do
             git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain origin refs/heads/"${TARGET_BRANCH_NAME}":"${TARGET_BRANCH_NAME}" > /dev/null 2>&1
             echo "$EB3""Pushed ""${TARGET_BRANCH_NAME}"
         fi
-        echo "$EB3""Finished - ""$GIT_REPO"
+        echo "$EB3""Finished - ""$GIT_REPO" > /dev/null 2>&1
     fi
     cd $PROJECT_BASE_FOLDER || exit
 done
