@@ -14,7 +14,6 @@ cd $PROJECT_BASE_FOLDER || exit
 for dir in */; do
     if [ -d "$dir" ] && [ "$dir" != "*-lib*" ]; then
         GIT_REPO="$dir"
-        echo "$GIT_REPO"
         cd $PROJECT_BASE_FOLDER/"$GIT_REPO" || exit
 
         # start of script - check if there are any uncommitted changes
@@ -44,28 +43,27 @@ for dir in */; do
         fi
         # end of script - - check if there are any uncommitted changes
 
-        # prepare source branch
-        git fetch origin > /dev/null 2>&1
         git checkout "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
+        git fetch > /dev/null 2>&1
         git pull > /dev/null 2>&1
 
-        # prepare target branch
-        CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
-        if [ "$CURRENT_BRANCH" != "$TARGET_BRANCH_NAME" ]; then
-          git checkout "${TARGET_BRANCH_NAME}" > /dev/null 2>&1
-        fi
+        git checkout "${TARGET_BRANCH_NAME}" > /dev/null 2>&1
+        git fetch > /dev/null 2>&1
         git pull > /dev/null 2>&1
 
         UPSTREAM=${1:-'@{u}'}
         LOCAL=$(git rev-parse @)
-        #BBREMOTE=$(git rev-parse "$UPSTREAM")
+        GHREMOTE=$(git rev-parse "$UPSTREAM")
         BASE=$(git merge-base @ "$UPSTREAM")
 
+        echo "$EB2""$GIT_REPO""$GIT_BRANCH"
+
         git branch --merged | grep "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
-        if [ "$?" -eq "0" ]; then
-            echo "is completely merged to both master and development" > /dev/null 2>&1
+        if git branch --merged | grep -q "\b$SOURCE_BRANCH_NAME\b"; then
+            echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}"
         else
-            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit
+            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit  > /dev/null 2>&1
+            echo "$EB3""Merged ""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"
         fi
 
         LOCAL=$(git rev-parse @)
@@ -73,10 +71,10 @@ for dir in */; do
         GIT_HUB_REMOTE=$(git rev-parse origin/"${TARGET_BRANCH_NAME}")
 
         if [ "$GIT_HUB_REMOTE" != "$BASE" ] || [ "$GIT_HUB_REMOTE" != "$LOCAL" ]; then
-            git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain origin refs/heads/"${TARGET_BRANCH_NAME}":"${TARGET_BRANCH_NAME}"
-            echo "$EB3""Pushed"
+            git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain origin refs/heads/"${TARGET_BRANCH_NAME}":"${TARGET_BRANCH_NAME}" > /dev/null 2>&1
+            echo "$EB3""Pushed ""${TARGET_BRANCH_NAME}"
         fi
-        echo "$EB3""GH Remote has the latest - ""$GIT_REPO"
+        echo "$EB3""Finished - ""$GIT_REPO"
     fi
     cd $PROJECT_BASE_FOLDER || exit
 done

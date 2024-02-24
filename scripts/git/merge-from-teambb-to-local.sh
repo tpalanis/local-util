@@ -19,6 +19,7 @@ for dir in */; do
         else
             GIT_BRANCH=develop
         fi
+        echo "$EB2""$GIT_REPO""$GIT_BRANCH"
 
         # start of script - check if there are any uncommitted changes
         git update-index -q --ignore-submodules --refresh
@@ -54,13 +55,6 @@ for dir in */; do
         LOCAL=$(git rev-parse @)
         BBREMOTE=$(git rev-parse "$UPSTREAM")
         BASE=$(git merge-base @ "$UPSTREAM")
-
-        echo "$EB2""$GIT_REPO""$GIT_BRANCH"
-        #echo $EB3$LOCAL
-        #echo $EB3$BBREMOTE
-        #echo $EB3$BASE
-        # eval "$(ssh-agent -s)"
-        # ssh-add /c/Users/selva/.ssh/id_ed25519_bb-bqin-sp-beamteq-com-np
 
         if [ "${LOCAL}" == "${BBREMOTE}" ]; then
           echo "$EB3"" - Local has the latest from BB - NOPULL - ""$GIT_REPO""$GIT_BRANCH" > /dev/null 2>&1

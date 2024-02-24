@@ -12,13 +12,13 @@ cd $PROJECT_BASE_FOLDER
 for dir in */; do
     if ([ -d "$dir" ] && [[ "$dir" != *-lib* ]]); then
         GIT_REPO="$dir"
-        echo $EB2$GIT_REPO
         cd $PROJECT_BASE_FOLDER/$GIT_REPO
         if [[ $GIT_REPO == *-lib* ]]; then
             GIT_BRANCH=main
         else
             GIT_BRANCH=develop
         fi
+        echo $EB2$GIT_REPO"$GIT_BRANCH"
 
         # start of script - check if there are any uncommitted changes
         git update-index -q --ignore-submodules --refresh
