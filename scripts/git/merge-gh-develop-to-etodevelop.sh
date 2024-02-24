@@ -12,7 +12,7 @@ TARGET_BRANCH_NAME=eto-develop
 cd $PROJECT_BASE_FOLDER || exit
 
 for dir in */; do
-    if [ -d "$dir" ] && [ "$dir" != "*-lib*" ]; then
+    if [ -d "$dir" ] && [ "$dir" != "*-lib*" ] && [ "$dir" != ".idea" ]; then
         GIT_REPO="$dir"
         cd $PROJECT_BASE_FOLDER/"$GIT_REPO" || exit
 
