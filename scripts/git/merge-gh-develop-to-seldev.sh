@@ -63,12 +63,8 @@ for dir in */; do
         if [[ "$SOURCE_VERSION" == "$TARGET_VERSION" ]]; then
             echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}" > /dev/null 2>&1
         else
-            if git branch --merged | grep -q "\b$SOURCE_BRANCH_NAME\b"; then
-              echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}" > /dev/null 2>&1
-            else
-              git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit > /dev/null 2>&1
-              echo "$EB3""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"" - MERGED "
-            fi
+            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit > /dev/null 2>&1
+            echo "$EB3""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"" - MERGED "
         fi
 
         LOCAL=$(git rev-parse @)
