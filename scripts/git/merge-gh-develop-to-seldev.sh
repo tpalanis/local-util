@@ -11,6 +11,19 @@ SOURCE_BRANCH_NAME=develop
 TARGET_BRANCH_NAME=seldev-develop
 cd $PROJECT_BASE_FOLDER || exit
 
+mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/bt-common-util-be-0.0.1-SNAPSHOT.jar \
+    -DgroupId=com.beamteq.common -DartifactId=common-util-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
+mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/bt-common-service-be-0.0.1-SNAPSHOT.jar \
+    -DgroupId=com.beamteq.common -DartifactId=common-service-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
+mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/cms-be-0.0.1-SNAPSHOT.jar \
+    -DgroupId=com.beamteq.cms -DartifactId=cms-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
+mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/ecommerce-be-0.0.1-SNAPSHOT.jar \
+    -DgroupId=com.beamteq.ecom -DartifactId=ecom-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
+mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/matrimony-be-0.0.1-SNAPSHOT.jar \
+    -DgroupId=com.beamteq.matrim -DartifactId=matrimony-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
+mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/survey-0.0.1-SNAPSHOT.jar \
+    -DgroupId=com.beamteq.survey -DartifactId=survey-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
+
 for dir in */; do
     if [ -d "$dir" ] && [ "$dir" != "*-lib*" ] && [ "$dir" != ".idea" ]; then
         GIT_REPO="$dir"
@@ -63,7 +76,8 @@ for dir in */; do
         if [[ "$SOURCE_VERSION" == "$TARGET_VERSION" ]]; then
             echo "$EB3""${SOURCE_BRANCH_NAME}"" is already merged to ""${TARGET_BRANCH_NAME}" > /dev/null 2>&1
         else
-            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit > /dev/null 2>&1
+            git -c core.quotepath=false -c log.showSignature=false merge "${SOURCE_BRANCH_NAME}" --no-edit \
+                > /dev/null 2>&1
             echo "$EB3""${SOURCE_BRANCH_NAME}"" into ""${TARGET_BRANCH_NAME}"" - MERGED "
         fi
 
@@ -72,10 +86,17 @@ for dir in */; do
         GIT_HUB_REMOTE=$(git rev-parse origin/"${TARGET_BRANCH_NAME}")
 
         if [ "$GIT_HUB_REMOTE" != "$BASE" ] || [ "$GIT_HUB_REMOTE" != "$LOCAL" ]; then
-            git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain origin refs/heads/"${TARGET_BRANCH_NAME}":"${TARGET_BRANCH_NAME}" > /dev/null 2>&1
+            git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain origin \
+                refs/heads/"${TARGET_BRANCH_NAME}":"${TARGET_BRANCH_NAME}" > /dev/null 2>&1
             echo "$EB3""${TARGET_BRANCH_NAME}"" - PUSHED"
         fi
         echo "$EB3""Finished - ""$GIT_REPO" > /dev/null 2>&1
+    fi
+    if [[ $GIT_REPO == *"-be/" ]]; then
+      mvn install -Dmaven.test.skip=true > /dev/null 2>&1
+      echo "$EB3""${SOURCE_BRANCH_NAME}"" mvn  - INSTALLED "
+    else
+      echo "Not a BE folder - ""$GIT_REPO" > /dev/null 2>&1
     fi
     cd $PROJECT_BASE_FOLDER || exit
 done
