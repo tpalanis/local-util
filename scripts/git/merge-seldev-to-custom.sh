@@ -1,28 +1,15 @@
 #!/bin/sh
 
-echo "-- merge develop to seldev started"
+echo "-- merge develop to custom started"
 
 EB1="- --"
 EB2="- ----"
 EB3="- ------"
 HOME_FOLDER=/c/Users/selva
-PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/bqindev
-SOURCE_BRANCH_NAME=develop
-TARGET_BRANCH_NAME=seldev-develop
+PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/bqincustom
+SOURCE_BRANCH_NAME=seldev-develop
+TARGET_BRANCH_NAME=custom-develop
 cd $PROJECT_BASE_FOLDER || exit
-
-#mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/bt-common-util-be-0.0.1-SNAPSHOT.jar \
-#    -DgroupId=com.beamteq.common -DartifactId=common-util-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
-#mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/bt-common-service-be-0.0.1-SNAPSHOT.jar \
-#    -DgroupId=com.beamteq.common -DartifactId=common-service-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
-#mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/cms-be-0.0.1-SNAPSHOT.jar \
-#    -DgroupId=com.beamteq.cms -DartifactId=cms-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
-#mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/ecommerce-be-0.0.1-SNAPSHOT.jar \
-#    -DgroupId=com.beamteq.ecom -DartifactId=ecom-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
-#mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/matrimony-be-0.0.1-SNAPSHOT.jar \
-#    -DgroupId=com.beamteq.matrim -DartifactId=matrimony-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
-#mvn install:install-file -Dfile=$PROJECT_BASE_FOLDER/../sync-bb-sp2-to-gh-spd/all-be-lib/survey-0.0.1-SNAPSHOT.jar \
-#    -DgroupId=com.beamteq.survey -DartifactId=survey-be -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar /dev/null 2>&1
 
 for dir in */; do
     if [ -d "$dir" ] && [ "$dir" != "*-lib*" ] && [ "$dir" != ".idea" ]; then
