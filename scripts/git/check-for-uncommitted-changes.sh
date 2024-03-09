@@ -11,7 +11,7 @@ err=0
 folders=(
 "/c/Users/selva/Documents/code/sync-bb-sp2-to-gh-spd"
  "/c/Users/selva/Documents/code/etogrow"
- "/c/Users/selva/Documents/code/bqindev"
+ "/c/Users/selva/Documents/code/bqinseldev"
  "/c/Users/selva/Documents/code/bqincustom")
 
 # Loop through each folder in the list
@@ -29,7 +29,7 @@ for folder in "${folders[@]}"; do
 
             if [[ $folder == "/c/Users/selva/Documents/code/etogrow" ]]; then
                 GIT_BRANCH=eto-develop
-            elif [[ $folder == "/c/Users/selva/Documents/code/bqindev" ]]; then
+            elif [[ $folder == "/c/Users/selva/Documents/code/bqinseldev" ]]; then
                 GIT_BRANCH=seldev-develop
             elif [[ $folder == "/c/Users/selva/Documents/code/bqincustom" ]]; then
                 GIT_BRANCH=custom-develop

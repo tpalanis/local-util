@@ -6,7 +6,7 @@ EB1="- --"
 EB2="- ----"
 EB3="- ------"
 HOME_FOLDER=/c/Users/selva
-PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/bqindev
+PROJECT_BASE_FOLDER=$HOME_FOLDER/Documents/code/bqinseldev
 SOURCE_BRANCH_NAME=develop
 TARGET_BRANCH_NAME=seldev-develop
 cd $PROJECT_BASE_FOLDER || exit
