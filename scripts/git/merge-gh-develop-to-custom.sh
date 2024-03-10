@@ -80,8 +80,10 @@ for dir in */; do
         echo "$EB3""Finished - ""$GIT_REPO" > /dev/null 2>&1
     fi
     if [[ $GIT_REPO == *"-be/" ]]; then
-      mvn install -Dmaven.test.skip=true > /dev/null 2>&1
-      echo "$EB3""${SOURCE_BRANCH_NAME}"" mvn  - INSTALLED "
+      mvn install > /dev/null 2>&1
+      if [[ "$?" -ne 0 ]] ; then
+        echo "$EB3""$GIT_REPO""${SOURCE_BRANCH_NAME}"" mvn install - FAILED " > /dev/null 2>&1
+      fi
     else
       echo "Not a BE folder - ""$GIT_REPO" > /dev/null 2>&1
     fi
