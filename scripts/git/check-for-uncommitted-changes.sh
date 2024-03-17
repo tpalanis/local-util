@@ -36,6 +36,8 @@ for folder in "${folders[@]}"; do
             else
               if [[ $GIT_REPO == *-lib* ]]; then
                   GIT_BRANCH=main
+              elif [[ $GIT_REPO == *database-code* ]]; then
+                  GIT_BRANCH=main
               else
                   GIT_BRANCH=develop
               fi

@@ -15,6 +15,8 @@ for dir in */; do
         cd $PROJECT_BASE_FOLDER/$GIT_REPO
         if [[ $GIT_REPO == *-lib* ]]; then
             GIT_BRANCH=main
+        elif [[ $GIT_REPO == *database-code* ]]; then
+            GIT_BRANCH=main
         else
             GIT_BRANCH=develop
         fi
@@ -59,6 +61,9 @@ for dir in */; do
             echo $EB3"Remote has the latest in GH - NOPUSH - ""$GIT_REPO""${GIT_BRANCH}" > /dev/null 2>&1
         else
             git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain github-spd refs/heads/$GIT_BRANCH:$GIT_BRANCH > /dev/null 2>&1
+            if [[ $GIT_REPO == *database-code* ]]; then
+              git -c core.quotepath=false -c log.showSignature=false push --progress --porcelain github-spd refs/heads/$GIT_BRANCH:develop > /dev/null 2>&1
+            fi
             echo $EB3"Remote has the latest in GH - PUSHED - ""$GIT_REPO""${GIT_BRANCH}"
         fi
     fi

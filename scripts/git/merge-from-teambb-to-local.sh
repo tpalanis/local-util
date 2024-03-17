@@ -16,6 +16,8 @@ for dir in */; do
         cd $PROJECT_BASE_FOLDER/$GIT_REPO
         if [[ $GIT_REPO == *-lib* ]]; then
             GIT_BRANCH=main
+        elif [[ $GIT_REPO == *database-code* ]]; then
+            GIT_BRANCH=main
         else
             GIT_BRANCH=develop
         fi
