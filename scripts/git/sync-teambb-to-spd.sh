@@ -6,5 +6,6 @@ echo "sync started"
 ./push-from-local-to-ghspd.sh && \
 ./merge-gh-develop-to-etodevelop.sh && \
 ./merge-gh-develop-to-seldev.sh && \
-./merge-gh-develop-to-custom.sh
+./merge-gh-develop-to-custom.sh && \
+./check-for-uncommitted-changes.sh
 echo "sync ended"

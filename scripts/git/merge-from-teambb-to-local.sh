@@ -50,7 +50,7 @@ for dir in */; do
         fi
         # end of script - - check if there are any uncommitted changes
 
-        git checkout "${SOURCE_BRANCH_NAME}" > /dev/null 2>&1
+        git checkout "${GIT_BRANCH}" > /dev/null 2>&1
         git fetch > /dev/null 2>&1
 
         UPSTREAM=${1:-'@{u}'}
